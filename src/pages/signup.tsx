@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { createUserAsync } from '@/services/auth/create-user.service';
 import { User, userSchema } from '@/types/User';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
   const {
@@ -13,9 +16,15 @@ const SignupPage = () => {
   } = useForm<User>({
     resolver: zodResolver(userSchema),
   });
+  const navigate = useNavigate();
 
-  function formSubmit(values: User) {
-    console.info(values);
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (values: User) => await createUserAsync(values),
+    onSuccess: () => navigate('/signin'),
+  });
+
+  async function formSubmit(values: User) {
+    await mutateAsync(values);
   }
 
   return (
@@ -84,7 +93,7 @@ const SignupPage = () => {
               <p className="mt-1 text-xs text-red-500">{errors.password.message}</p>
             ) : null}
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={isPending} aria-disabled={isPending}>
             Criar Conta
           </Button>
         </form>
