@@ -1,17 +1,17 @@
-import { Constants } from "@/constants";
-import SigninPage from "@/pages/signin";
-import SignupPage from "@/pages/signup";
-import { QueryClient, MutationCache, QueryClientProvider } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { toast, Toaster } from "sonner";
-import Layout from "./ui/layout";
+import { Constants } from '@/constants';
+import SigninPage from '@/pages/signin';
+import SignupPage from '@/pages/signup';
+import { QueryClient, MutationCache, QueryClientProvider } from '@tanstack/react-query';
+import { isAxiosError } from 'axios';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { toast, Toaster } from 'sonner';
+import Layout from './ui/layout';
 
 const queryClient = new QueryClient({
   mutationCache: new MutationCache({
     onError: (error) => {
       if (isAxiosError(error)) {
-        return toast.error(error.response?.data.message);
+        return toast.error(error.response?.data.message || Constants.DEFAULT_ERROR_MESSAGE);
       }
       toast.error(Constants.DEFAULT_ERROR_MESSAGE);
     },

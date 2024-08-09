@@ -5,7 +5,7 @@ import { signinUserAsync } from '@/services/auth/signin-user.service';
 import { loginSchema, UserLogin } from '@/types/User';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { useCookies } from 'react-cookie';
+import Cookies from 'js-cookie';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,12 +18,11 @@ const SigninPage = () => {
     resolver: zodResolver(loginSchema),
   });
   const navigate = useNavigate();
-  const [__, setCookie] = useCookies();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (values: UserLogin) => await signinUserAsync(values),
     onSuccess: (res) => {
-      setCookie('access_token', res.data?.token);
+      Cookies.set('access_token', res.data?.token);
       navigate('/');
     },
   });
