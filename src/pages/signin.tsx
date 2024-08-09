@@ -1,32 +1,35 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { TAX_NUMBER_REGEXP_VALIDATOR } from '@/types/User';
+import { signinUserAsync } from '@/services/auth/signin-user.service';
+import { loginSchema, UserLogin } from '@/types/User';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
-const loginSchema = z.object({
-  taxNumber: z
-    .string({ message: 'O CPF/CNPJ é obrigatório' })
-    .regex(TAX_NUMBER_REGEXP_VALIDATOR, {
-      message: 'O CPF ou CNPJ deve conter 11 ou 14 dígitos',
-    })
-    .max(14, 'O CPF ou CNPJ deve conter 11 ou 14 dígitos'),
-  password: z.string({ message: 'A senha é obrigatória' }),
-});
+import { useNavigate } from 'react-router-dom';
 
 const SigninPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.infer<typeof loginSchema>>({
+  } = useForm<UserLogin>({
     resolver: zodResolver(loginSchema),
   });
+  const navigate = useNavigate();
+  const [__, setCookie] = useCookies();
 
-  function formSubmit(values: z.infer<typeof loginSchema>) {
-    console.info(values);
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (values: UserLogin) => await signinUserAsync(values),
+    onSuccess: (res) => {
+      setCookie('access_token', res.data?.token);
+      navigate('/');
+    },
+  });
+
+  async function formSubmit(values: UserLogin) {
+    await mutateAsync(values);
   }
 
   return (
@@ -62,8 +65,8 @@ const SigninPage = () => {
               <p className="mt-1 text-xs text-red-500">{errors.password.message}</p>
             ) : null}
           </div>
-          <Button type="submit" className="w-full">
-            Criar Conta
+          <Button type="submit" className="w-full" disabled={isPending} aria-disabled={isPending}>
+            Login
           </Button>
         </form>
       </div>
