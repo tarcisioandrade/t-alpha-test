@@ -10,22 +10,24 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: 'Nome',
   },
   {
     accessorKey: 'description',
-    header: 'Description',
+    header: 'Descrição',
     cell: ({ row }) => {
       return <p className="line-clamp-1">{row.getValue('description')}</p>;
     },
   },
   {
     accessorKey: 'price',
-    header: 'Price',
+    header: 'Preço',
+    cell: ({ row }) =>
+      Number(row.getValue('price')).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
   },
   {
     accessorKey: 'stock',
-    header: 'Stock',
+    header: 'Estoque',
   },
   {
     id: 'actions',
