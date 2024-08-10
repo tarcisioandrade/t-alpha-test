@@ -6,8 +6,8 @@ import {
   getPaginationRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
+  PaginationState,
 } from '@tanstack/react-table';
-
 import {
   Table,
   TableBody,
@@ -21,7 +21,9 @@ import Spinner from '../ui/spinner';
 import { useTableContext } from './table-context';
 import ProductCreateSheet from '../product-create-sheet';
 import { TablePagination } from './table-pagination';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useDebounce } from '@/hooks/use-debounce';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -36,28 +38,71 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const pageIndex = Number(searchParams.get('page')) || 1;
+  const pageSize = Number(searchParams.get('per_page')) || 10;
+  const globalFilter = searchParams.get('q') || '';
+
   const { loading } = useTableContext();
+
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: pageIndex - 1,
+    pageSize: pageSize,
+  });
+  const [searchValue, setSearchValue] = useState(globalFilter);
+  const searchValueDebounced = useDebounce(searchValue);
+
+  useEffect(() => {
+    setSearchParams((params) => {
+      params.set('page', String(pagination.pageIndex + 1));
+      params.set('per_page', String(pagination.pageSize));
+      return params;
+    });
+  }, [pagination.pageIndex, pagination.pageSize]);
+
   const table = useReactTable({
     data,
     columns,
+    state: { columnFilters, globalFilter, pagination },
+    onGlobalFilterChange: (value) => {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        if (value) {
+          newParams.set('q', value);
+        } else {
+          newParams.delete('q');
+        }
+        return newParams;
+      });
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: { columnFilters },
+    onPaginationChange: setPagination,
   });
+
+  useEffect(
+    function handleSearchValue() {
+      table.setGlobalFilter(searchValueDebounced);
+    },
+    [searchValueDebounced],
+  );
 
   return (
     <div>
       <div className="flex items-center justify-between py-4">
-        <Input
-          placeholder="Filtrar por nomes..."
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => {
-            table.getColumn('name')?.setFilterValue(event.target.value);
-          }}
-          className="max-w-sm"
-        />
+        <div>
+          <Input
+            placeholder="Filtrar por nomes..."
+            value={searchValue}
+            onChange={(event) => {
+              setSearchValue(event.target.value);
+            }}
+            className="max-w-sm"
+          />
+        </div>
         <ProductCreateSheet />
       </div>
       <div className="rounded-md border">
