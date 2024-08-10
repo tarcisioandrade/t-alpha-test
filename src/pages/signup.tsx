@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { createUserAsync } from '@/services/auth/create-user.service';
+import { createUserAsync } from '@/services/session.service';
 import { User, userSchema } from '@/types/User';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
