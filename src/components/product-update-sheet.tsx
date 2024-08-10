@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Textarea } from './ui/textarea';
+import { productKeys } from '@/lib/query-key-factory';
 
 type Props = {
   product: Product;
@@ -42,7 +43,7 @@ const ProductSheet = ({ product, children, open, setSheetOpen, ...rest }: Props)
     mutationFn: async (product: z.output<typeof productSchema>) =>
       await updateProductAsync(product),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['get-all-products'] });
+      queryClient.invalidateQueries({ queryKey: productKeys.all });
       setSheetOpen(false);
     },
   });

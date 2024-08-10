@@ -13,6 +13,7 @@ import { deleteProductAsync } from '@/services/product/delete.service';
 import { useTableContext } from './table-context';
 import ProductSheet from '../product-update-sheet';
 import { useState } from 'react';
+import { productKeys } from '@/lib/query-key-factory';
 
 type Props = {
   product: Product;
@@ -27,7 +28,7 @@ const TableActions = ({ product }: Props) => {
   const { mutateAsync: mutateDelAsync } = useMutation({
     mutationFn: async (id: number) => await deleteProductAsync(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['get-all-products'] });
+      queryClient.invalidateQueries({ queryKey: productKeys.all });
     },
     onSettled: () => {
       setLoading(false);

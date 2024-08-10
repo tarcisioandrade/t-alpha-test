@@ -19,6 +19,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { createProductAsync } from '@/services/product/create.service';
 import { Textarea } from './ui/textarea';
+import { productKeys } from '@/lib/query-key-factory';
 
 const createProductSchema = productSchema.omit({ id: true });
 
@@ -33,7 +34,7 @@ const ProductCreateSheet = () => {
     mutationFn: async (product: z.infer<typeof createProductSchema>) =>
       await createProductAsync(product),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['get-all-products'] });
+      queryClient.invalidateQueries({ queryKey: productKeys.all });
       setSheetOpen(false);
       reset();
     },
