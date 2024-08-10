@@ -6,6 +6,8 @@ import { isAxiosError } from 'axios';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { toast, Toaster } from 'sonner';
 import Layout from './ui/layout';
+import PrivateRoute from './private-route';
+import HomePage from '@/pages/home';
 
 const queryClient = new QueryClient({
   mutationCache: new MutationCache({
@@ -24,7 +26,14 @@ const Providers = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<h1>oi</h1>} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <HomePage />
+                </PrivateRoute>
+              }
+            />
           </Route>
           <Route path="*" element={<Navigate to="/404" replace />} />
           <Route path="/signup" element={<SignupPage />} />
