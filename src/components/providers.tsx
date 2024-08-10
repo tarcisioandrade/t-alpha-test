@@ -3,11 +3,12 @@ import SigninPage from '@/pages/signin';
 import SignupPage from '@/pages/signup';
 import { QueryClient, MutationCache, QueryClientProvider } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { toast, Toaster } from 'sonner';
 import Layout from './ui/layout';
 import PrivateRoute from './private-route';
 import HomePage from '@/pages/home';
+import NotFoundPage from '@/pages/404';
 
 const queryClient = new QueryClient({
   mutationCache: new MutationCache({
@@ -35,7 +36,7 @@ const Providers = () => {
               }
             />
           </Route>
-          <Route path="*" element={<Navigate to="/404" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/signin" element={<SigninPage />} />
         </Routes>
