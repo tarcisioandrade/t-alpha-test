@@ -24,7 +24,7 @@ const createProductSchema = productSchema.omit({ id: true });
 
 const ProductCreateSheet = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
-  const { register, handleSubmit } = useForm<z.infer<typeof createProductSchema>>({
+  const { register, handleSubmit, reset } = useForm<z.infer<typeof createProductSchema>>({
     resolver: zodResolver(createProductSchema),
   });
   const queryClient = useQueryClient();
@@ -35,6 +35,7 @@ const ProductCreateSheet = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['get-all-products'] });
       setSheetOpen(false);
+      reset();
     },
   });
 
