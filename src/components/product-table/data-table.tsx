@@ -1,3 +1,11 @@
+import { Input } from '@/components/ui/input';
+import Spinner from '../ui/spinner';
+import { useTableContext } from './table-context';
+import ProductCreateSheet from '../product-create-sheet';
+import { TablePagination } from './table-pagination';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useDebounce } from '@/hooks/use-debounce';
 import {
   ColumnDef,
   flexRender,
@@ -16,14 +24,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Input } from '@/components/ui/input';
-import Spinner from '../ui/spinner';
-import { useTableContext } from './table-context';
-import ProductCreateSheet from '../product-create-sheet';
-import { TablePagination } from './table-pagination';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { useDebounce } from '@/hooks/use-debounce';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,14 +37,12 @@ export function DataTable<TData, TValue>({
   isError,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
   const [searchParams, setSearchParams] = useSearchParams();
+  const { loading } = useTableContext();
 
   const pageIndex = Number(searchParams.get('page')) || 1;
   const pageSize = Number(searchParams.get('per_page')) || 10;
   const globalFilter = searchParams.get('q') || '';
-
-  const { loading } = useTableContext();
 
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: pageIndex - 1,
@@ -52,14 +50,6 @@ export function DataTable<TData, TValue>({
   });
   const [searchValue, setSearchValue] = useState(globalFilter);
   const searchValueDebounced = useDebounce(searchValue);
-
-  useEffect(() => {
-    setSearchParams((params) => {
-      params.set('page', String(pagination.pageIndex + 1));
-      params.set('per_page', String(pagination.pageSize));
-      return params;
-    });
-  }, [pagination.pageIndex, pagination.pageSize]);
 
   const table = useReactTable({
     data,
@@ -84,6 +74,17 @@ export function DataTable<TData, TValue>({
   });
 
   useEffect(
+    function defaultQueryState() {
+      setSearchParams((params) => {
+        params.set('page', String(pagination.pageIndex + 1));
+        params.set('per_page', String(pagination.pageSize));
+        return params;
+      });
+    },
+    [pagination.pageIndex, pagination.pageSize],
+  );
+
+  useEffect(
     function handleSearchValue() {
       table.setGlobalFilter(searchValueDebounced);
     },
@@ -91,7 +92,7 @@ export function DataTable<TData, TValue>({
   );
 
   return (
-    <div>
+    <div className="mt-6">
       <div className="flex items-center justify-between py-4">
         <div>
           <Input
@@ -122,7 +123,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="relative">
+          <TableBody className="relative min-h-[400px]">
             {loading ? (
               <tr className="absolute inset-0 grid place-items-center bg-white/30 backdrop-blur-sm  ">
                 <td>

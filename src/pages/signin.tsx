@@ -32,8 +32,8 @@ const SigninPage = () => {
   }
 
   return (
-    <main className="grid h-screen grid-cols-2">
-      <div className="grid place-items-center">
+    <main className="grid h-screen lg:grid-cols-2">
+      <div className="grid place-items-center p-4">
         <form
           onSubmit={handleSubmit(formSubmit)}
           className="max-w-lg space-y-4 rounded border bg-card p-4"
@@ -67,9 +67,15 @@ const SigninPage = () => {
           <Button type="submit" className="w-full" disabled={isPending} aria-disabled={isPending}>
             Login
           </Button>
+          <p className="text-sm">
+            Não possui uma conta?{' '}
+            <Button className="p-0" variant="link" asChild>
+              <a href="/signup">Cadastre-se</a>
+            </Button>
+          </p>
         </form>
       </div>
-      <div className="bg-primary" />
+      <div className="hidden bg-primary lg:block" />
     </main>
   );
 };

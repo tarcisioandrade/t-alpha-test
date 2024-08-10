@@ -48,7 +48,7 @@ const ProductCreateSheet = () => {
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger asChild>
         <Button className="space-x-1">
-          <Plus /> <span>Adicionar Produto</span>
+          <Plus /> <span className="hidden sm:inline">Adicionar Produto</span>
         </Button>
       </SheetTrigger>
       <SheetContent>
