@@ -1,12 +1,12 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { createUserAsync } from '@/services/session.service';
-import { User, userSchema } from '@/types/User';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { createUserAsync } from "@/services/session.service";
+import { User, userSchema } from "@/types/User";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const {
@@ -20,7 +20,7 @@ const SignupPage = () => {
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (values: User) => await createUserAsync(values),
-    onSuccess: () => navigate('/signin'),
+    onSuccess: () => navigate("/signin"),
   });
 
   async function formSubmit(values: User) {
@@ -42,7 +42,7 @@ const SignupPage = () => {
           </header>
           <div>
             <Label htmlFor="name">Name</Label>
-            <Input {...register('name')} id="name" placeholder="João da Silva" required />
+            <Input {...register("name")} id="name" placeholder="João da Silva" required />
             {errors.name?.message ? (
               <p className="mt-1 text-xs text-red-500">{errors.name.message}</p>
             ) : null}
@@ -50,7 +50,7 @@ const SignupPage = () => {
           <div>
             <Label htmlFor="email">Email</Label>
             <Input
-              {...register('mail')}
+              {...register("mail")}
               id="email"
               type="email"
               placeholder="m@example.com"
@@ -62,7 +62,7 @@ const SignupPage = () => {
           </div>
           <div>
             <Label htmlFor="taxNumber">CPF/CNPJ</Label>
-            <Input {...register('taxNumber')} id="taxNumber" placeholder="12345678900" required />
+            <Input {...register("taxNumber")} id="taxNumber" placeholder="12345678900" required />
             {errors.taxNumber?.message ? (
               <p className="mt-1 text-xs text-red-500">{errors.taxNumber.message}</p>
             ) : null}
@@ -70,7 +70,7 @@ const SignupPage = () => {
           <div>
             <Label htmlFor="phone">Celular</Label>
             <Input
-              {...register('phone')}
+              {...register("phone")}
               id="phone"
               type="tel"
               placeholder="11999999999"
@@ -83,7 +83,7 @@ const SignupPage = () => {
           <div>
             <Label htmlFor="password">Senha</Label>
             <Input
-              {...register('password')}
+              {...register("password")}
               id="password"
               type="password"
               placeholder="123456"
@@ -97,7 +97,7 @@ const SignupPage = () => {
             Criar Conta
           </Button>
           <p className="text-sm">
-            Já possui uma conta?{' '}
+            Já possui uma conta?{" "}
             <Button className="p-0" variant="link" asChild>
               <a href="/signin">Acesse</a>
             </Button>

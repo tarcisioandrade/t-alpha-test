@@ -1,14 +1,14 @@
-import { LogOut } from 'lucide-react';
-import { Button } from './ui/button';
-import { logout } from '@/services/session.service';
-import { useNavigate } from 'react-router-dom';
+import { LogOut } from "lucide-react";
+import { Button } from "./ui/button";
+import { logout } from "@/services/session.service";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
 
   function triggerLogout() {
     logout();
-    navigate('/signin');
+    navigate("/signin");
   }
 
   return (

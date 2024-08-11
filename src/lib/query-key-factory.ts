@@ -1,3 +1,3 @@
 export const productKeys = {
-  all: ['get-all-products'],
+  all: ["get-all-products"],
 };

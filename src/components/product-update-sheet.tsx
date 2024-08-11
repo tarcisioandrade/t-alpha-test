@@ -1,7 +1,7 @@
-import { Product, productSchema } from '@/types/Product';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Product, productSchema } from "@/types/Product";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetContent,
@@ -9,16 +9,16 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from '@/components/ui/sheet';
-import { DialogProps } from '@radix-ui/react-dialog';
-import { Dispatch, ReactNode, SetStateAction } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateProductAsync } from '@/services/product/update.service';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Textarea } from './ui/textarea';
-import { productKeys } from '@/lib/query-key-factory';
+} from "@/components/ui/sheet";
+import { DialogProps } from "@radix-ui/react-dialog";
+import { Dispatch, ReactNode, SetStateAction } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateProductAsync } from "@/services/product/update.service";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Textarea } from "./ui/textarea";
+import { productKeys } from "@/lib/query-key-factory";
 
 type Props = {
   product: Product;
@@ -72,7 +72,7 @@ const ProductSheet = ({ product, children, open, setSheetOpen, ...rest }: Props)
             <Label htmlFor="name" className="text-right">
               Nome
             </Label>
-            <Input id="name" className="col-span-3" {...register('name')} />
+            <Input id="name" className="col-span-3" {...register("name")} />
           </div>
           <div className="grid grid-cols-4 items-start gap-4">
             <Label htmlFor="description" className="text-right">
@@ -82,20 +82,20 @@ const ProductSheet = ({ product, children, open, setSheetOpen, ...rest }: Props)
               rows={10}
               id="description"
               className="col-span-3"
-              {...register('description')}
+              {...register("description")}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="price" className="text-right">
               Preço
             </Label>
-            <Input id="price" className="col-span-3" {...register('price')} />
+            <Input id="price" className="col-span-3" {...register("price")} />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="stock" className="text-right">
               Estoque
             </Label>
-            <Input id="stock" className="col-span-3" {...register('stock')} />
+            <Input id="stock" className="col-span-3" {...register("stock")} />
           </div>
           <SheetFooter>
             <Button type="submit" disabled={isPending} aria-disabled={isPending}>

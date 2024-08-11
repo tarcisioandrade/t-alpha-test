@@ -1,7 +1,7 @@
-import { Table } from '@tanstack/react-table';
-import { Button } from '../ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Table } from "@tanstack/react-table";
+import { Button } from "../ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 export function TablePagination<TData>({
   table,

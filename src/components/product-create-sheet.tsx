@@ -6,20 +6,20 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { Button } from './ui/button';
-import { Label } from './ui/label';
-import { Input } from './ui/input';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { productSchema } from '@/types/Product';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus } from 'lucide-react';
-import { createProductAsync } from '@/services/product/create.service';
-import { Textarea } from './ui/textarea';
-import { productKeys } from '@/lib/query-key-factory';
+} from "@/components/ui/sheet";
+import { Button } from "./ui/button";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { productSchema } from "@/types/Product";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Plus } from "lucide-react";
+import { createProductAsync } from "@/services/product/create.service";
+import { Textarea } from "./ui/textarea";
+import { productKeys } from "@/lib/query-key-factory";
 
 const createProductSchema = productSchema.omit({ id: true });
 
@@ -61,7 +61,7 @@ const ProductCreateSheet = () => {
             <Label htmlFor="name" className="text-right">
               Nome
             </Label>
-            <Input id="name" className="col-span-3" {...register('name')} />
+            <Input id="name" className="col-span-3" {...register("name")} />
           </div>
           <div className="grid grid-cols-4 items-start gap-4">
             <Label htmlFor="description" className="text-right">
@@ -71,20 +71,20 @@ const ProductCreateSheet = () => {
               id="description"
               rows={10}
               className="col-span-3"
-              {...register('description')}
+              {...register("description")}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="price" className="text-right">
               Preço
             </Label>
-            <Input id="price" className="col-span-3" {...register('price')} />
+            <Input id="price" className="col-span-3" {...register("price")} />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="stock" className="text-right">
               Estoque
             </Label>
-            <Input id="stock" className="col-span-3" min={0} {...register('stock')} />
+            <Input id="stock" className="col-span-3" min={0} {...register("stock")} />
           </div>
           <SheetFooter>
             <Button type="submit" disabled={isPending} aria-disabled={isPending}>

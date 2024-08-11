@@ -1,5 +1,5 @@
-import { instance } from '@/lib/instance-axios';
-import { Product } from '@/types/Product';
+import { instance } from "@/lib/instance-axios";
+import { Product } from "@/types/Product";
 
 export async function updateProductAsync(product: Product) {
   const { id, ...rest } = product;

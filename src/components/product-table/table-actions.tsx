@@ -1,19 +1,19 @@
-import { MoreHorizontal } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Product } from '@/types/Product';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteProductAsync } from '@/services/product/delete.service';
-import { useTableContext } from './table-context';
-import ProductSheet from '../product-update-sheet';
-import { useState } from 'react';
-import { productKeys } from '@/lib/query-key-factory';
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Product } from "@/types/Product";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteProductAsync } from "@/services/product/delete.service";
+import { useTableContext } from "./table-context";
+import ProductSheet from "../product-update-sheet";
+import { useState } from "react";
+import { productKeys } from "@/lib/query-key-factory";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
 type Props = {
   product: Product;

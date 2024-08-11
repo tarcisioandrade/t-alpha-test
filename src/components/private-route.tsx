@@ -1,5 +1,5 @@
-import { isAuthenticate } from '@/services/session.service';
-import { Navigate } from 'react-router-dom';
+import { isAuthenticate } from "@/services/session.service";
+import { Navigate } from "react-router-dom";
 
 type Props = {
   children: JSX.Element;

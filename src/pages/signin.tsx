@@ -1,13 +1,13 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { signinUserAsync } from '@/services/session.service';
-import { loginSchema, UserLogin } from '@/types/User';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import Cookies from 'js-cookie';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { signinUserAsync } from "@/services/session.service";
+import { loginSchema, UserLogin } from "@/types/User";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const SigninPage = () => {
   const {
@@ -22,8 +22,8 @@ const SigninPage = () => {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (values: UserLogin) => await signinUserAsync(values),
     onSuccess: (res) => {
-      Cookies.set('access_token', res.data?.token);
-      navigate('/');
+      Cookies.set("access_token", res.data?.token);
+      navigate("/");
     },
   });
 
@@ -46,7 +46,7 @@ const SigninPage = () => {
           </header>
           <div>
             <Label htmlFor="taxNumber">CPF/CNPJ</Label>
-            <Input {...register('taxNumber')} id="taxNumber" placeholder="12345678900" required />
+            <Input {...register("taxNumber")} id="taxNumber" placeholder="12345678900" required />
             {errors.taxNumber?.message ? (
               <p className="mt-1 text-xs text-red-500">{errors.taxNumber.message}</p>
             ) : null}
@@ -54,7 +54,7 @@ const SigninPage = () => {
           <div>
             <Label htmlFor="password">Senha</Label>
             <Input
-              {...register('password')}
+              {...register("password")}
               id="password"
               type="password"
               placeholder="123456"
@@ -68,7 +68,7 @@ const SigninPage = () => {
             Login
           </Button>
           <p className="text-sm">
-            Não possui uma conta?{' '}
+            Não possui uma conta?{" "}
             <Button className="p-0" variant="link" asChild>
               <a href="/signup">Cadastre-se</a>
             </Button>

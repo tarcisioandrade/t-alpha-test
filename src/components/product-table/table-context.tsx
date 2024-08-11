@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from 'react';
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from "react";
 
 type TableContextProps = {
   loading: boolean;
@@ -15,7 +15,7 @@ function TableProvider({ children }: { children: ReactNode }) {
 function useTableContext() {
   const context = useContext(TableContext);
   if (context === undefined) {
-    throw new Error('useTableContext não pode ser utilizado sem o provider.');
+    throw new Error("useTableContext não pode ser utilizado sem o provider.");
   }
   return context;
 }
