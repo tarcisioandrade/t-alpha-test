@@ -39,6 +39,12 @@ module.exports = {
     "no-useless-escape": "off",
     "react/prop-types": "off",
     "@typescript-eslint/no-unused-vars": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
   },
   ignorePatterns: ["dist", "node_modules", ".eslintrc.cjs", "eslint.config.js"],
   globals: {
